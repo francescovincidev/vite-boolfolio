@@ -1,11 +1,13 @@
 <script>
 import axios from 'axios';
+import ProjectCard from './components/ProjectCard.vue';
 
 export default {
+
     data() {
         return {
             projects: []
-        }
+        };
 
     },
     mounted() {
@@ -15,14 +17,28 @@ export default {
         getProjects() {
             axios.get('http://127.0.0.1:8000/api/projects').then(resp => {
                 this.projects = resp.data.results;
-            })
+            });
         }
-    }
+    },
+    components:
+        { ProjectCard }
 
 }
 
 </script>
 
-<template></template>
+<template>
+    <div class="container">
+        <div class="row row-cols-3">
+            <div class="col" v-for="project in projects" :key="project.id">
 
-<style lang="scss"></style>
+                <ProjectCard :project="project" />
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<style lang="scss">
+@use "./styles/general.scss" as *;
+</style>
