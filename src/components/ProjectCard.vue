@@ -21,16 +21,17 @@ export default {
     <div class="card h-100">
         <div class="card-body">
             <h5>{{ project.title }}</h5>
+            <p>{{ project.content }}</p>
             <p class="text-primary">
             <div>
 
-                <span v-if="project.type">{{ project.type.name }}</span>
+                <span v-if="project.type">Tipo: {{ project.type.name }}</span>
                 <span v-else>Nessun tipo</span>
             </div>
             <div>
 
-                <template v-if="project.technologys.length >= 1"><span v-for="(technology, index) in project.technologys"
-                        :key="index">{{
+                <template v-if="project.technologys.length"><span v-for="(technology, index) in project.technologys"
+                        :key="index">Tecnologie: {{
                             technology.name
                         }}<span v-if="index !== project.technologys.length - 1">, </span> </span></template>
                 <span v-else>Nessuna tecnologia</span>
