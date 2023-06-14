@@ -16,7 +16,7 @@ export default {
     methods: {
         getProjects() {
             axios.get('http://127.0.0.1:8000/api/projects').then(resp => {
-                this.projects = resp.data.results;
+                this.projects = resp.data.results.data;
             });
         }
     },
@@ -29,6 +29,7 @@ export default {
 
 <template>
     <div class="container">
+        <h1>Progetti</h1>
         <div class="row row-cols-3">
             <div class="col" v-for="project in projects" :key="project.id">
 
