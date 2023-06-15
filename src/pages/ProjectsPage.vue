@@ -49,6 +49,7 @@ export default {
 
                 <ProjectCard :project="project" />
 
+
             </div>
         </div>
 

@@ -30,13 +30,15 @@ export default {
             </div>
             <div>
 
-                <template v-if="project.technologys.length"><span v-for="(technology, index) in project.technologys"
-                        :key="index">Tecnologie: {{
+                <template v-if="project.technologys.length">Tecnologie: <span
+                        v-for="(technology, index) in project.technologys" :key="index">{{
                             technology.name
-                        }}<span v-if="index !== project.technologys.length - 1">, </span> </span></template>
+                        }}{{ index === project.technologys.length - 1 ? '' : ', ' }} </span></template>
                 <span v-else>Nessuna tecnologia</span>
             </div>
             </p>
+            <router-link :to="{ name: 'single-projects', params: { slug: project.slug } }"
+                class="btn btn-primary">Visualizza dettagli</router-link>
         </div>
     </div>
 </template>
