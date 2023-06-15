@@ -5,7 +5,11 @@ export default {
 </script>
 
 <template>
-    <h2>Home page</h2>
+    <div class="container">
+        <h2>Benvenuto</h2>
+        <router-link :to="{ name: 'projects' }">Visualizza i tuoi progetti</router-link>
+
+    </div>
 </template>
 
 <style lang="scss" scoped></style>
