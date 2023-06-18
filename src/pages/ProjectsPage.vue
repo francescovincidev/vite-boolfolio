@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProjectCard from '../components/ProjectCard.vue';
 import { store } from '../store';
 
+
 export default {
     name: "ProjectsPage",
 
@@ -12,20 +13,36 @@ export default {
             currentPage: 1,
             lastPage: null,
             totalProjects: 0,
+            types: [],
+            selectedType: "all",
             store
         };
 
     },
     mounted() {
         this.getProjects();
+        this.getTypes();
+
     },
     methods: {
+        getTypes() {
+            axios.get(`${store.apiBaseUrl}/api/types`).then((resp) => {
+                this.types = resp.data.results;
+            })
+        },
         getProjects(pageNumber = 1) {
-            axios.get(`${store.apiBaseUrl}/api/projects`, {
-                params: {
-                    page: pageNumber
-                }
-            }).then(resp => {
+
+            const params = {
+                page: pageNumber,
+
+            }
+
+            if (this.selectedType !== "all") {
+
+                params.type_id = this.selectedType;
+
+            }
+            axios.get(`${store.apiBaseUrl}/api/projects`, { params }).then(resp => {
                 this.projects = resp.data.results.data;
                 this.currentPage = resp.data.results.current_page;
                 this.lastPage = resp.data.results.last_page;
@@ -42,6 +59,16 @@ export default {
 
 <template>
     <div class="container">
+
+        <!-- Filtri -->
+        <p>
+            <label class="form-label" for="category">Tipi</label>
+            <select v-model="selectedType" id="category" class="form-select" @change="getProjects()">
+                <option value="all">Tutti</option>
+                <option :value="singleType.id" v-for="singleType in types" :key="singleType.id">{{ singleType.name }}
+                </option>
+            </select>
+        </p>
 
         <h5 class="m-3 text-end">Progetti totali: {{ totalProjects }}</h5>
         <div class="row row-cols-4 g-3">
